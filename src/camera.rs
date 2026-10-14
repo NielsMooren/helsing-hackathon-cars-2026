@@ -9,6 +9,9 @@ use opencv::{
     prelude::*,
 };
 
+use serde::Deserialize;
+use serde_json::Result;
+
 use crate::data;
 use reqwest::blocking::ClientBuilder;
 
@@ -229,3 +232,21 @@ pub fn request_camera_2() -> Vec<u8> {
     request_camera(data::CAM_2_ENDPOINT, data::CAM_2_TOKEN)
 }
 
+#[derive(Deserialize, Clone)]
+struct GoalResponse {
+    quadrant: String,
+    time_remaining: f32,
+}
+
+pub fn request_goal() -> GoalResponse {
+    let client = ClientBuilder::new()
+        .build()
+        .expect("builder");
+
+    let response = client.get(data::GOAL_ENDPOINT).send().expect("response");
+
+    let bytes = response.bytes().unwrap();
+    let response: GoalResponse = serde_json::from_slice(&bytes).unwrap();
+
+    return response;
+}
