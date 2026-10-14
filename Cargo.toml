@@ -13,4 +13,7 @@ name = "request-camera"
 http = "1.5.0"
 opencv = "0.101.1"
 reqwest = { version = "0.13.5", features = ["blocking"] }
-tokio = "1.53.3"
+tokio = { version = "1.53.3", features = ["macros", "rt-multi-thread", "sync", "time"] }
+
+[features]
+vision = ["dep:opencv"]
