@@ -1,6 +1,6 @@
 use opencv::imgcodecs;
 
-use hackathon::{CarDetector, request_camera_1, request_camera_2};
+use hackathon::Game;
 
 fn main() {
     let files = [
@@ -9,19 +9,18 @@ fn main() {
         "images/car_topdown3.jpeg",
         "images/car_topdown4.jpeg",
     ];
-    // let image = imgcodecs::imread("cam1.jpg", imgcodecs::IMREAD_COLOR).unwrap();
     // let image =
     //     imgcodecs::imdecode(&request_camera_2().as_slice(), imgcodecs::IMREAD_COLOR).unwrap();
 
-    let mut detector = CarDetector::default();
+    let mut game = Game::new(2);
     for file in files {
         let image = imgcodecs::imread(file, imgcodecs::IMREAD_COLOR).unwrap();
-        detector.detect(&image);
-        for (item, id) in detector.corners.iter().zip(&detector.ids) {
-            println!("{id}");
-            for item_corner in item {
-                println!("    ({}, {})", item_corner.x, item_corner.y)
-            }
+        let car = game.update(&image).unwrap();
+        println!("{file}");
+        for (id, marker) in &game.markers {
+            println!("  marker {id}: {marker:?}");
         }
+        println!("  corners: {:?}", game.arena_corners);
+        println!("  car: {car:?}");
     }
 }
