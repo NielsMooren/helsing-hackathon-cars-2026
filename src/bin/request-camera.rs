@@ -1,24 +1,10 @@
 use std::fs;
 
-use reqwest::blocking::ClientBuilder;
-
-use hackathon::data;
-use hackathon::data::CAM_1_ENDPOINT;
+use hackathon::{request_camera_2, request_camera_1};
 
 // #[tokio::main]
 fn main() {
-    let mut headers = http::HeaderMap::with_capacity(1);
-    headers.insert(
-        http::header::AUTHORIZATION,
-        http::header::HeaderValue::from_static(data::CAM_1_TOKEN),
-    );
-    let cam1_endpoint = format!("http://{}/frame", CAM_1_ENDPOINT);
-    let mut client = ClientBuilder::new()
-        .default_headers(headers)
-        .build()
-        .expect("builder");
-    println!("{}", cam1_endpoint);
-    let response = client.get(&cam1_endpoint).send().expect("response");
-    fs::write("cam1.jpg", &response.bytes().unwrap()).expect("write");
+    fs::write("cam1.jpg", request_camera_1()).expect("write");
+    fs::write("cam2.jpg", request_camera_2()).expect("write");
     println!("Hello, world!");
 }
