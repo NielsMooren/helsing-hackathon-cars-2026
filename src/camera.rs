@@ -11,8 +11,8 @@ use reqwest::blocking::ClientBuilder;
 
 pub struct CarDetector {
     detector: ArucoDetector,
-    corners: Vector<Vector<Point2f>>,
-    ids: Vector<i32>,
+    pub corners: Vector<Vector<Point2f>>,
+    pub ids: Vector<i32>,
     rejected: Vector<Vector<Point2f>>,
 }
 
