@@ -1,4 +1,6 @@
+pub mod camera;
 pub mod car;
-
-#[path = "../data.rs"]
 pub mod data;
+
+pub use camera::*;
+pub use data::*;
