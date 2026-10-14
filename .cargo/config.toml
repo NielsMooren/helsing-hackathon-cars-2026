@@ -1,0 +1,4 @@
+# opencv's build script loads libclang via @rpath; Cargo overrides
+# DYLD_FALLBACK_LIBRARY_PATH for build scripts, so embed the rpath instead.
+[build]
+rustflags = ["-C", "link-arg=-Wl,-rpath,/Library/Developer/CommandLineTools/usr/lib"]
