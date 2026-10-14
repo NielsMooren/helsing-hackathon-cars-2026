@@ -1,3 +1,2 @@
 # Team SNR
-Team members: Roy, Simon, and Niels
-
+Team members: Roy, Simon, Niels and Gilbert

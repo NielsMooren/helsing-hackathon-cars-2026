@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-opencv = "0.101.1"
-reqwest = "0.13.5"
+http = "1.5.0"
+# opencv = "0.101.1"
+reqwest = { version = "0.13.5", features = ["blocking"] }
 tokio = "1.53.3"
