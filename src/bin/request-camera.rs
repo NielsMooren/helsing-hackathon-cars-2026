@@ -18,7 +18,7 @@ fn main() {
         .build()
         .expect("builder");
     println!("{}", cam1_endpoint);
-    let mut response = client.get(&cam1_endpoint).send().expect("response");
+    let response = client.get(&cam1_endpoint).send().expect("response");
     fs::write("cam1.jpg", &response.bytes().unwrap()).expect("write");
     println!("Hello, world!");
 }
