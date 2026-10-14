@@ -63,8 +63,12 @@ impl Detector {
         // Don't let a frame with no detections report the previous frame's markers.
         self.corners.clear();
         self.ids.clear();
-        self.detector
-            .detect_markers(image, &mut self.corners, &mut self.ids, &mut self.rejected)?;
+        self.detector.detect_markers(
+            image,
+            &mut self.corners,
+            &mut self.ids,
+            &mut self.rejected,
+        )?;
         self.ids
             .iter()
             .zip(self.corners.iter())
@@ -91,14 +95,15 @@ pub struct Car {
 }
 impl Car {
     /// Whether the car's centre is in `quad`; points on the 0.5 lines count as right/bottom.
-    pub fn in_quad(&self, quad: &Quadrant) -> bool {
+    pub fn in_quad(&self, quad: &str) -> bool {
         let left = self.pos.x < 0.5;
         let top = self.pos.y < 0.5;
         match quad {
-            Quadrant::TopLeft => left && top,
-            Quadrant::TopRight => !left && top,
-            Quadrant::BottomRight => !left && !top,
-            Quadrant::BottomLeft => left && !top,
+            "TL" => left && top,
+            "TR" => !left && top,
+            "BR" => !left && !top,
+            "BL" => left && !top,
+            _ => true,
         }
     }
 }
@@ -242,9 +247,7 @@ struct GoalResponse {
 }
 
 pub fn request_goal() -> GoalResponse {
-    let client = ClientBuilder::new()
-        .build()
-        .expect("builder");
+    let client = ClientBuilder::new().build().expect("builder");
 
     let response = client.get(data::GOAL_ENDPOINT).send().expect("response");
 
