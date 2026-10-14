@@ -16,7 +16,7 @@ use crate::data;
 use reqwest::blocking::ClientBuilder;
 
 /// Marker ids for the arena's top-left, top-right, bottom-right, bottom-left corners.
-pub const CORNER_IDS: [i32; 4] = [0, 12, 13, 14];
+pub const CORNER_IDS: [i32; 4] = [14, 13, 0, 12];
 /// Arena map coordinates for top-left, top-right, bottom-right, bottom-left (0..1).
 const MAP: [(f32, f32); 4] = [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)];
 
@@ -60,6 +60,9 @@ impl Default for Detector {
 impl Detector {
     /// Every marker visible in `image`, keyed by id.
     pub fn detect(&mut self, image: &Mat) -> opencv::Result<HashMap<i32, Marker>> {
+        // Don't let a frame with no detections report the previous frame's markers.
+        self.corners.clear();
+        self.ids.clear();
         self.detector
             .detect_markers(image, &mut self.corners, &mut self.ids, &mut self.rejected)?;
         self.ids
