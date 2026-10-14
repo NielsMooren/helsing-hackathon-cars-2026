@@ -1,0 +1,9 @@
+[package]
+name = "helsing-hackathon-cars-2026"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+opencv = "0.101.1"
+reqwest = "0.13.5"
+tokio = "1.53.3"

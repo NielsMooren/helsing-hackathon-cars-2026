@@ -1,0 +1,9 @@
+pub const CAR_ENDPOINT: str = "192.168.0.95:5000";
+pub const CAR_TOKEN: str = "86398";
+pub const CAM_1_ENDPOINT: str = "192.168.0.118:50051";
+pub const CAM_1_TOKEN: str = "983149";
+pub const CAM_2_ENDPOINT: str = "192.168.0.107:50051";
+pub const CAM_2_TOKEN: str = "378031";
+pub const GOAL_ENDPOINT: str = "http://192.168.0.19:8000/goal";
+pub const DASHBOARD_ENDPOINT: str = "http://192.168.0.19:8000";
+pub const CORNERS: [u16] = [0, 12, 13, 14];
