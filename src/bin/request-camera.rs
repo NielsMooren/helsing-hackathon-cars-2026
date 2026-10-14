@@ -2,9 +2,8 @@ use std::fs;
 
 use reqwest::blocking::ClientBuilder;
 
-use crate::data::CAM_1_ENDPOINT;
-
-mod data;
+use hackathon::data::CAM_1_ENDPOINT;
+use hackathon::data;
 
 // #[tokio::main]
 fn main() {
