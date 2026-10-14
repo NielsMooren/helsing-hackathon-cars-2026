@@ -67,12 +67,34 @@ impl Detector {
     }
 }
 
+/// A quarter of the arena, in 0..1 map coordinates with y pointing down.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Quadrant {
+    TopLeft,
+    TopRight,
+    BottomRight,
+    BottomLeft,
+}
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Car {
     /// Position in arena coordinates (0..1).
     pub pos: Point2f,
     /// Heading in radians in arena coordinates, measured from +x towards +y.
     pub dir: f32,
+}
+impl Car {
+    /// Whether the car's centre is in `quad`; points on the 0.5 lines count as right/bottom.
+    pub fn in_quad(&self, quad: &Quadrant) -> bool {
+        let left = self.pos.x < 0.5;
+        let top = self.pos.y < 0.5;
+        match quad {
+            Quadrant::TopLeft => left && top,
+            Quadrant::TopRight => !left && top,
+            Quadrant::BottomRight => !left && !top,
+            Quadrant::BottomLeft => left && !top,
+        }
+    }
 }
 
 pub struct Game {
