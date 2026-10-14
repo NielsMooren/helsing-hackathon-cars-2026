@@ -2,7 +2,7 @@ use reqwest::blocking::ClientBuilder;
 
 pub mod data;
 
-pub fn request_camera(endpoint: &'static str, token: &'static str) -> &[u8] {
+pub fn request_camera(endpoint: &'static str, token: &'static str) -> Vec<u8> {
     let mut headers = http::HeaderMap::with_capacity(1);
     headers.insert(
         http::header::AUTHORIZATION,
@@ -17,11 +17,11 @@ pub fn request_camera(endpoint: &'static str, token: &'static str) -> &[u8] {
 
     let response = client.get(&cam1_endpoint).send().expect("response");
 
-    return &response.bytes().expect("bytes");
+    response.bytes().expect("bytes").to_vec()
 }
 
-pub fn request_camera_1() -> &[u8] {
-    return request_camera(data::CAM_1_ENDPOINT, data::CAM_1_TOKEN);
+pub fn request_camera_1() -> Vec<u8> {
+    request_camera(data::CAM_1_ENDPOINT, data::CAM_1_TOKEN)
 }
 
 // pub fn request_camera_2() -> Vec<u8> {

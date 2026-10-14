@@ -2,8 +2,8 @@ use std::fs;
 
 use reqwest::blocking::ClientBuilder;
 
-use hackathon::data::CAM_1_ENDPOINT;
 use hackathon::data;
+use hackathon::data::CAM_1_ENDPOINT;
 
 // #[tokio::main]
 fn main() {
@@ -19,8 +19,6 @@ fn main() {
         .expect("builder");
     println!("{}", cam1_endpoint);
     let mut response = client.get(&cam1_endpoint).send().expect("response");
-
     fs::write("cam1.jpg", &response.bytes().unwrap()).expect("write");
-
     println!("Hello, world!");
 }
